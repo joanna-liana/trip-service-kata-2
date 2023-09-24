@@ -17,10 +17,8 @@ export default class TripService {
             throw new UserNotLoggedInException();
         }
 
-        if (!user.isFriendsWith(requester)) {
-            return [];
-        }
-
-        return this.findTripsBy(user);
+        return user.isFriendsWith(requester) ?
+            this.findTripsBy(user) :
+            [];
     }
 }
