@@ -5,6 +5,8 @@ import Trip from "./Trip";
 import TripDAO from "./TripDAO";
 
 export default class TripService {
+    private readonly NO_TRIPS = [];
+
     constructor(
         private readonly userSession: typeof UserSession = UserSession,
         private readonly findTripsBy: (user: User) => Trip[] = TripDAO.findTripsByUser
@@ -15,7 +17,7 @@ export default class TripService {
 
         return user.isFriendsWith(requester) ?
             this.findTripsBy(user) :
-            [];
+            this.NO_TRIPS;
 
     }
 
