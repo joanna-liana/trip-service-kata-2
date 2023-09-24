@@ -6,7 +6,7 @@ import TripDAO from "./TripDAO";
 
 export default class TripService {
     constructor(
-        private readonly userSession: typeof UserSession,
+        private readonly userSession: typeof UserSession = UserSession,
         private readonly findTripsBy: (user: User) => Trip[] = TripDAO.findTripsByUser
     ) {}
 
