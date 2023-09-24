@@ -15,21 +15,21 @@ export default class TripService {
         const loggedUser: User = this.userSession.getLoggedUser();
         let isFriend: boolean = false;
 
-        if (loggedUser != null) {
-            for (const friend of user.getFriends()) {
-                if (friend === loggedUser) {
-                    isFriend = true;
-                    break;
-                }
-            }
-
-            if (isFriend) {
-                tripList = this.findTripsByUser(user);
-            }
-
-            return tripList;
-        } else {
+        if (!loggedUser) {
             throw new UserNotLoggedInException();
         }
+
+        for (const friend of user.getFriends()) {
+            if (friend === loggedUser) {
+                isFriend = true;
+                break;
+            }
+        }
+
+        if (isFriend) {
+            tripList = this.findTripsByUser(user);
+        }
+
+        return tripList;
     }
 }
