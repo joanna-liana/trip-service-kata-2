@@ -6,8 +6,12 @@ import User from "../src/user/User";
 
 describe("Get trips by user use case", () => {
     it("does not allow to use the system without logging in", () => {
-        const sut = new TripService({ getLoggedUser: () => null });
+        // given
+        const user = new User();
+        const sessionWithoutUser = { getLoggedUser: () => null };
+        const sut = new TripService(sessionWithoutUser);
 
-        expect(() => sut.getTripsByUser(new User())).toThrowError(UserNotLoggedInException);
+        // when, then
+        expect(() => sut.getTripsByUser(user)).toThrowError(UserNotLoggedInException);
     });
 });
