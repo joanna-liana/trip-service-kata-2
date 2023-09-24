@@ -26,7 +26,7 @@ describe("Get trips by user use case", () => {
             const trips = [];
             const friend = new User();
             friend.addFriend(requester);
-            TripDAO.findTripsByUser = jest.fn().mockReturnValue([]);
+            TripDAO.findTripsByUser = jest.fn().mockReturnValue(trips);
             sut = new TripService(sessionWithUser);
 
             // when
