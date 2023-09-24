@@ -1,6 +1,7 @@
 import "jest";
 
 import UserNotLoggedInException from "../src/exception/UserNotLoggedInException";
+import Trip from "../src/trip/Trip";
 import TripService from "../src/trip/TripService";
 import User from "../src/user/User";
 import UserSession from "../src/user/UserSession";
@@ -18,19 +19,25 @@ describe("Get trips by user use case", () => {
             sut = new TripService(sessionWithUser);
         });
 
-        it("returns a trip list if the requester is a friend of the queried user", () => {
-            // given
-            const trips = [];
-            const friend = new User();
-            friend.addFriend(requester);
-            sut = new TripService(sessionWithUser, () => trips);
+        it.each([
+            ["no trips", []],
+            ["single trip", new Trip()],
+            ["multiple trips", new Trip(), new Trip()]
+        ])(
+            "returns a trip list if the requester is a friend of the queried user - %s",
+            (_description, trips: Trip[]) => {
+                // given
+                const friend = new User();
+                friend.addFriend(requester);
+                sut = new TripService(sessionWithUser, () => trips);
 
-            // when
-            const tripList = sut.getTripsByUser(friend);
+                // when
+                const tripList = sut.getTripsByUser(friend);
 
-            // then
-            expect(tripList).toStrictEqual(trips);
-        });
+                // then
+                expect(tripList).toStrictEqual(trips);
+            }
+        );
 
         it("returns an empty result if the user tries to list their own trips", () => {
             // when
