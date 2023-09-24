@@ -11,14 +11,21 @@ export default class TripService {
     ) {}
 
     public getTripsByUser(user: User): Trip[] {
+        const requester = this.ensureRequester();
+
+        return user.isFriendsWith(requester) ?
+            this.findTripsBy(user) :
+            [];
+
+    }
+
+    private ensureRequester() {
         const requester = this.userSession.getLoggedUser();
 
         if (!requester) {
             throw new UserNotLoggedInException();
         }
 
-        return user.isFriendsWith(requester) ?
-            this.findTripsBy(user) :
-            [];
+        return requester;
     }
 }
