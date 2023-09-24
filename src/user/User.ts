@@ -19,4 +19,8 @@ export default class User {
     public getTrips(): Trip[] {
         return this.trips;
     }
+
+    public isFriendsWith(anotherUser: User) {
+        return this.getFriends().some(friend => friend === anotherUser);
+    }
 }
