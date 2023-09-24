@@ -39,6 +39,15 @@ describe("Get trips by user use case", () => {
             }
         );
 
+        it("returns an empty result if the requester is not a friend of the queried user", () => {
+            // when
+            const nonFriend = new User();
+            const tripList = sut.getTripsByUser(nonFriend);
+
+            // then
+            expect(tripList).toStrictEqual([]);
+        });
+
         it("returns an empty result if the user tries to list their own trips", () => {
             // when
             const tripList = sut.getTripsByUser(requester);
