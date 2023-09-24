@@ -27,9 +27,11 @@ export default class TripService {
             }
         }
 
-        if (isFriend) {
-            tripList = this.findTripsByUser(user);
+        if (!isFriend) {
+            return tripList;
         }
+
+        tripList = this.findTripsByUser(user);
 
         return tripList;
     }
