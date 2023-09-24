@@ -1,12 +1,9 @@
 import "jest";
 
 import UserNotLoggedInException from "../src/exception/UserNotLoggedInException";
-import TripDAO from "../src/trip/TripDAO";
 import TripService from "../src/trip/TripService";
 import User from "../src/user/User";
 import UserSession from "../src/user/UserSession";
-
-jest.mock("../src/trip/TripDAO");
 
 describe("Get trips by user use case", () => {
     describe("given a logged in requester", () => {
@@ -26,8 +23,7 @@ describe("Get trips by user use case", () => {
             const trips = [];
             const friend = new User();
             friend.addFriend(requester);
-            TripDAO.findTripsByUser = jest.fn().mockReturnValue(trips);
-            sut = new TripService(sessionWithUser);
+            sut = new TripService(sessionWithUser, () => trips);
 
             // when
             const tripList = sut.getTripsByUser(friend);
