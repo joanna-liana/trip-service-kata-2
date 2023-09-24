@@ -7,11 +7,11 @@ import TripDAO from "./TripDAO";
 export default class TripService {
     constructor(
         private readonly userSession: typeof UserSession,
-        private readonly findTripsByUser: (user: User) => Trip[] = TripDAO.findTripsByUser
+        private readonly findTripsBy: (user: User) => Trip[] = TripDAO.findTripsByUser
     ) {}
 
     public getTripsByUser(user: User): Trip[] {
-        const requester: User = this.userSession.getLoggedUser();
+        const requester = this.userSession.getLoggedUser();
 
         if (!requester) {
             throw new UserNotLoggedInException();
@@ -21,6 +21,6 @@ export default class TripService {
             return [];
         }
 
-        return this.findTripsByUser(user);
+        return this.findTripsBy(user);
     }
 }
