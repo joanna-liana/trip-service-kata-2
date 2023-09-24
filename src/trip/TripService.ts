@@ -5,7 +5,10 @@ import Trip from "./Trip";
 import TripDAO from "./TripDAO";
 
 export default class TripService {
-    constructor(private readonly userSession: typeof UserSession) {}
+    constructor(
+        private readonly userSession: typeof UserSession,
+        private readonly findTripsByUser: (user: User) => Trip[] = TripDAO.findTripsByUser
+    ) {}
 
     public getTripsByUser(user: User): Trip[] {
         let tripList: Trip[] = [];
@@ -21,7 +24,7 @@ export default class TripService {
             }
 
             if (isFriend) {
-                tripList = TripDAO.findTripsByUser(user);
+                tripList = this.findTripsByUser(user);
             }
 
             return tripList;
