@@ -17,7 +17,6 @@ export default class TripService {
             throw new UserNotLoggedInException();
         }
 
-        const tripList: Trip[] = [];
         let isFriend: boolean = false;
 
         for (const friend of user.getFriends()) {
@@ -28,7 +27,7 @@ export default class TripService {
         }
 
         if (!isFriend) {
-            return tripList;
+            return [];
         }
 
         return this.findTripsByUser(user);
