@@ -12,15 +12,15 @@ export default class TripService {
 
     public getTripsByUser(user: User): Trip[] {
         let tripList: Trip[] = [];
-        const loggedUser: User = this.userSession.getLoggedUser();
+        const loggedRequester: User = this.userSession.getLoggedUser();
         let isFriend: boolean = false;
 
-        if (!loggedUser) {
+        if (!loggedRequester) {
             throw new UserNotLoggedInException();
         }
 
         for (const friend of user.getFriends()) {
-            if (friend === loggedUser) {
+            if (friend === loggedRequester) {
                 isFriend = true;
                 break;
             }
