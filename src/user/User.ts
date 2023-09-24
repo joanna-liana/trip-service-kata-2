@@ -4,10 +4,6 @@ export default class User {
     private trips: Trip[] = [];
     private friends: User[] = [];
 
-    public getFriends(): User[] {
-        return this.friends;
-    }
-
     public addFriend(user: User): void {
         this.friends.push(user);
     }
@@ -21,6 +17,6 @@ export default class User {
     }
 
     public isFriendsWith(anotherUser: User) {
-        return this.getFriends().some(friend => friend === anotherUser);
+        return this.friends.some(friend => friend === anotherUser);
     }
 }
