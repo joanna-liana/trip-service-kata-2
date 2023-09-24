@@ -17,14 +17,7 @@ export default class TripService {
             throw new UserNotLoggedInException();
         }
 
-        let isFriend: boolean = false;
-
-        for (const friend of user.getFriends()) {
-            if (friend === loggedRequester) {
-                isFriend = true;
-                break;
-            }
-        }
+        const isFriend = user.getFriends().some(friend => friend === loggedRequester);
 
         if (!isFriend) {
             return [];
